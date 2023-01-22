@@ -20,3 +20,11 @@ class ValidateEmailDomain:
         domain = args[0].split('@')[1]
         if domain not in self.domains:
             raise ValidationError(f'This email domain {domain} is not correct.')
+
+
+def validate_email_unique(value: str):
+    from .models import Student
+    emails = [email['email'] for email in Student.objects.values('email').order_by('email')]
+
+    if value in emails:
+        raise ValidationError(f'Email: {value} is not unique.')
