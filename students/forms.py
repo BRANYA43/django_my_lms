@@ -13,6 +13,7 @@ class CreateStudentForm(forms.ModelForm):
             'age',
             'email',
             'city',
+            'phone',
         ]
         exclude = [
 
@@ -22,3 +23,13 @@ class CreateStudentForm(forms.ModelForm):
         value = self.cleaned_data.get('first_name')
 
         return value.capitalize()
+
+    def clean_phone(self):
+        ret = ''
+        value = self.cleaned_data.get('phone')
+        for elem in value:
+            if elem.isdigit():
+                ret += elem
+            elif elem in '()-+':
+                ret += elem
+        return ret
