@@ -46,3 +46,11 @@ def get_render_update(request: HttpRequest, pk: int):
                   context={'token': token,
                            'title': 'Update selected Group',
                            'as_table': form.as_table()})
+
+
+def get_render_detail(request: HttpRequest, pk: int):
+    group = Group.objects.get(pk=pk)
+    return render(request=request,
+                  template_name='groups/update.html',
+                  context={'title': 'Detail of Group',
+                           'group': group})
