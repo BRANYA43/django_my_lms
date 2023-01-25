@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS - {{ title }}</title>
+</head>
+<body>
+    <form method="post">
+        <input type="hidden" name="csrfmiddlewaretoken" value={{ token }}>
+        <table>
+            {{ as_table }}
+        </table>
+        <input type="submit" value="Submit"><br>
+    </form>
+</body>
+</html>
