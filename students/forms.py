@@ -12,7 +12,7 @@ class CreateStudentForm(forms.ModelForm):
         fields = [
             'first_name',
             'last_name',
-            'age',
+            'birthday',
             'email',
             'city',
             'phone',
@@ -20,6 +20,9 @@ class CreateStudentForm(forms.ModelForm):
         exclude = [
 
         ]
+        widgets = {
+            'birthday': forms.DateInput(attrs={'type': 'date'})
+        }
 
     def clean_first_name(self):
         value = self.cleaned_data.get('first_name')
@@ -45,3 +48,18 @@ class CreateStudentForm(forms.ModelForm):
             value = value[2:]
         ret += f'({value[:3]}) {value[3:6]}-{value[6:8]}-{value[-2:]}'
         return ret
+
+
+class UpdateStudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = [
+            'first_name',
+            'last_name',
+            'birthday',
+            'city',
+        ]
+
+        widgets = {
+            'birthday': forms.DateInput(attrs={'type': 'date'})
+        }
