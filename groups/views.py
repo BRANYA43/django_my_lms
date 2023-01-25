@@ -2,11 +2,11 @@ from django.middleware.csrf import get_token
 from django.shortcuts import render
 from django.http import HttpRequest, HttpResponseRedirect
 
-from .forms import CreateGroupForm
+from .forms import CreateGroupForm, UpdateGroupForm
 from .models import Group
 
 
-def get_render_list(request):
+def get_render_list(request: HttpRequest):
     groups = Group.objects.all().order_by('start_date')
     return render(request=request,
                   template_name='groups/list.html',
@@ -29,3 +29,20 @@ def get_render_create(request: HttpRequest):
                            'title': 'Create new Group',
                            'as_table': form.as_table()})
 
+
+def get_render_update(request: HttpRequest, pk: int):
+    group = Group.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = UpdateGroupForm(instance=group)
+    elif request.method == 'POST':
+        form = UpdateGroupForm(request.POST, instance=group)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/groups/')
+
+    token = get_token(request)
+    return render(request=request,
+                  template_name='groups/create.html',
+                  context={'token': token,
+                           'title': 'Update selected Group',
+                           'as_table': form.as_table()})
