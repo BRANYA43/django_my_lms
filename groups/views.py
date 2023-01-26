@@ -27,7 +27,7 @@ def get_render_create(request: HttpRequest):
                   template_name='groups/create.html',
                   context={'token': token,
                            'title': 'Create new Group',
-                           'as_table': form.as_table()})
+                           'form': form})
 
 
 def get_render_update(request: HttpRequest, pk: int):
@@ -42,15 +42,15 @@ def get_render_update(request: HttpRequest, pk: int):
 
     token = get_token(request)
     return render(request=request,
-                  template_name='groups/create.html',
+                  template_name='groups/update.html',
                   context={'token': token,
                            'title': 'Update selected Group',
-                           'as_table': form.as_table()})
+                           'form': form})
 
 
 def get_render_detail(request: HttpRequest, pk: int):
     group = Group.objects.get(pk=pk)
     return render(request=request,
-                  template_name='groups/update.html',
+                  template_name='groups/detail.html',
                   context={'title': 'Detail of Group',
                            'group': group})
