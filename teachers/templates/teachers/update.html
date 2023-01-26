@@ -7,10 +7,12 @@
 <body>
     <form method="post">
         <input type="hidden" name="csrfmiddlewaretoken" value={{ token }}>
-            <table>
+            <table border="1">
                 {{ form.as_table }}
             </table>
-        <input type="submit" value="Submit"><br>
+        <br>
+        <input type="submit" value="Submit">
+        <br><br>
         <a href="/teachers/">Back to list</a>
     </form>
 </body>
