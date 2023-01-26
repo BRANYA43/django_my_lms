@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.db import models
 from faker import Faker
 
@@ -5,6 +7,8 @@ from faker import Faker
 class Teacher(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
+    birthday = models.DateField()
+    salary = models.DecimalField(max_digits=10, decimal_places=2)
     email = models.EmailField()
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
@@ -22,5 +26,7 @@ class Teacher(models.Model):
             teacher = cls()
             teacher.first_name = faker.first_name()
             teacher.last_name = faker.last_name()
+            teacher.birthday = faker.date_between(start_date='-65y', end_date='-25y')
+            teacher.salary = Decimal(faker.random_int(min=5000, max=20000))
             teacher.email = f'{teacher.first_name}@test.com'
             teacher.save()

@@ -8,5 +8,7 @@ class CreateTeacherForm(forms.ModelForm):
         model = Teacher
         fields = ['first_name',
                   'last_name',
+                  'birthday',
+                  'salary',
                   'email',
                   ]
