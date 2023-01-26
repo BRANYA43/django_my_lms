@@ -12,3 +12,14 @@ class CreateTeacherForm(forms.ModelForm):
                   'salary',
                   'email',
                   ]
+
+
+class UpdateTeacherForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ['first_name',
+                  'last_name',
+                  'birthday',
+                  'salary',
+                  'email',
+                  ]

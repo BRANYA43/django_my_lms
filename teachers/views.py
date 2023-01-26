@@ -26,3 +26,19 @@ def get_render_create(request: HttpRequest):
     return render(request=request,
                   template_name='teachers/create.html',
                   context={'token': token, 'title': 'Create new Teacher', 'form': form})
+
+
+def get_render_update(request: HttpRequest, pk: int):
+    teacher = Teacher.objects.get(pk=pk)
+    if request.method == 'GET':
+        form = CreateTeacherForm(instance=teacher)
+    elif request.method == 'POST':
+        form = CreateTeacherForm(request.POST, instance=teacher)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/teachers/')
+
+    token = get_token(request)
+    return render(request=request,
+                  template_name='teachers/update.html',
+                  context={'token': token, 'title': 'Create new Teacher', 'form': form})
