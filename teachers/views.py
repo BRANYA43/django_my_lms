@@ -41,11 +41,11 @@ def get_render_update(request: HttpRequest, pk: int):
     token = get_token(request)
     return render(request=request,
                   template_name='teachers/update.html',
-                  context={'token': token, 'title': 'Create new Teacher', 'form': form})
+                  context={'token': token, 'title': 'Update selected Teacher', 'form': form})
 
 
 def get_render_detail(request: HttpRequest, pk: int):
     teacher = Teacher.objects.get(pk=pk)
     return render(request=request,
                   template_name='teachers/detail.html',
-                  context={'title': 'Create new Teacher', 'teacher': teacher})
+                  context={'title': 'Details selected Teacher', 'teacher': teacher})
