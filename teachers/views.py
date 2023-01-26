@@ -42,3 +42,10 @@ def get_render_update(request: HttpRequest, pk: int):
     return render(request=request,
                   template_name='teachers/update.html',
                   context={'token': token, 'title': 'Create new Teacher', 'form': form})
+
+
+def get_render_detail(request: HttpRequest, pk: int):
+    teacher = Teacher.objects.get(pk=pk)
+    return render(request=request,
+                  template_name='teachers/detail.html',
+                  context={'title': 'Create new Teacher', 'teacher': teacher})
