@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LMS - {{ title }}</title>
+</head>
+<body>
+    <p>Title: {{ group.title }}</p>
+    <p>Start date: {{ group.start_date }}</p>
+    <p>Description: {{ group.description }}/p>
+    <br><br>
+    <a href="/groups/update/{{ group.pk }}"><b>Edit</b></a>
+    <br><br>
+    <a href="/groups/"><b>Back to list</b></a>
+</body>
+</html>
