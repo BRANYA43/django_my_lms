@@ -6,14 +6,14 @@ from .forms import CreateTeacherForm, UpdateTeacherForm
 from .models import Teacher
 
 
-def get_render_list(request: HttpRequest):
+def get_render_list_teacher(request: HttpRequest):
     teachers = Teacher.objects.all().order_by('first_name')
     return render(request=request,
                   template_name='teachers/list.html',
                   context={'title': 'List of Teachers', 'teachers': teachers})
 
 
-def get_render_create(request: HttpRequest):
+def get_render_create_teacher(request: HttpRequest):
     if request.method == 'GET':
         form = CreateTeacherForm()
     elif request.method == 'POST':
@@ -28,7 +28,7 @@ def get_render_create(request: HttpRequest):
                   context={'token': token, 'title': 'Create new Teacher', 'form': form})
 
 
-def get_render_update(request: HttpRequest, pk: int):
+def get_render_update_teacher(request: HttpRequest, pk: int):
     teacher = Teacher.objects.get(pk=pk)
     if request.method == 'GET':
         form = UpdateTeacherForm(instance=teacher)
@@ -44,7 +44,7 @@ def get_render_update(request: HttpRequest, pk: int):
                   context={'token': token, 'title': 'Create new Teacher', 'form': form})
 
 
-def get_render_detail(request: HttpRequest, pk: int):
+def get_render_detail_teacher(request: HttpRequest, pk: int):
     teacher = Teacher.objects.get(pk=pk)
     return render(request=request,
                   template_name='teachers/detail.html',

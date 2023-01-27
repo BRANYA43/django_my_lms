@@ -6,14 +6,14 @@ from .forms import CreateGroupForm, UpdateGroupForm
 from .models import Group
 
 
-def get_render_list(request: HttpRequest):
+def get_render_list_group(request: HttpRequest):
     groups = Group.objects.all().order_by('start_date')
     return render(request=request,
                   template_name='groups/list.html',
                   context={'title': 'List of Group', 'groups': groups})
 
 
-def get_render_create(request: HttpRequest):
+def get_render_create_group(request: HttpRequest):
     if request.method == 'GET':
         form = CreateGroupForm()
     elif request.method == 'POST':
@@ -30,7 +30,7 @@ def get_render_create(request: HttpRequest):
                            'form': form})
 
 
-def get_render_update(request: HttpRequest, pk: int):
+def get_render_update_group(request: HttpRequest, pk: int):
     group = Group.objects.get(pk=pk)
     if request.method == 'GET':
         form = UpdateGroupForm(instance=group)
@@ -48,7 +48,7 @@ def get_render_update(request: HttpRequest, pk: int):
                            'form': form})
 
 
-def get_render_detail(request: HttpRequest, pk: int):
+def get_render_detail_group(request: HttpRequest, pk: int):
     group = Group.objects.get(pk=pk)
     return render(request=request,
                   template_name='groups/detail.html',
