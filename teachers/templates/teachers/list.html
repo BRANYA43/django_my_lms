@@ -3,6 +3,8 @@
 {% block title %}List of teachers{% endblock %}
 
 {% block content %}
+    <a href="{% url 'teachers:create' %}">Create new Teacher</a>
+    <br><br>
     <table border="1">
         <thead>
             <tr>
@@ -18,7 +20,7 @@
                     <td><a href="{% url 'teachers:detail' teacher.pk %}">{{ teacher.first_name }}</a></td>
                     <td>{{ teacher.last_name }}</td>
                     <td><a href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
-                    <td><a href="{% url 'teachers:delete' teacher.pk %}">Remove</a></td>
+                    <td><a href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
                 </tr>
             {% endfor %}
         </tbody>

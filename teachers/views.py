@@ -1,9 +1,11 @@
 from django.middleware.csrf import get_token
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import CreateTeacherForm, UpdateTeacherForm
+from .forms import CreateTeacherForm
+from .forms import UpdateTeacherForm
 from .models import Teacher
 
 
@@ -23,7 +25,6 @@ def get_render_create(request: HttpRequest):
             form.save()
             return HttpResponseRedirect(reverse('teachers:list'))
 
-    token = get_token(request)
     return render(request=request,
                   template_name='teachers/create.html',
                   context={'form': form})
@@ -39,7 +40,6 @@ def get_render_update(request: HttpRequest, pk: int):
             form.save()
             return HttpResponseRedirect(reverse('teachers:list'))
 
-    token = get_token(request)
     return render(request=request,
                   template_name='teachers/update.html',
                   context={'form': form})

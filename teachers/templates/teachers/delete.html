@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete Teacher{% endblock %}
+{% block title %}Delete selected Teacher{% endblock %}
 
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <p>Do you really want to remove teacher <strong>{{ teacher.first_name }} {{ teacher.last_name }}</strong>?</p>
+        <p>Do you really want to delete teacher <strong>{{ teacher.first_name }} {{ teacher.last_name }}</strong>?</p>
         <input type="submit" value="Agree">
         <br><br>
         <a href="{% url 'teachers:list' %}">Back to list</a>

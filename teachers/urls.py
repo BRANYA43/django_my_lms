@@ -1,6 +1,10 @@
 from django.urls import path
 
-from teachers.views import get_render_list, get_render_create, get_render_update, get_render_detail, get_render_delete
+from .views import get_render_list
+from .views import get_render_create
+from .views import get_render_update
+from .views import get_render_detail
+from .views import get_render_delete
 
 app_name = 'teachers'
 
