@@ -1,9 +1,10 @@
-from django.middleware.csrf import get_token
 from django.shortcuts import render
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest
+from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import CreateGroupForm, UpdateGroupForm
+from .forms import CreateGroupForm
+from .forms import UpdateGroupForm
 from .models import Group
 
 
@@ -21,9 +22,8 @@ def get_render_create(request: HttpRequest):
         form = CreateGroupForm(request.POST)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect('groups:list')
+            return HttpResponseRedirect(reverse('groups:list'))
 
-    token = get_token(request)
     return render(request=request,
                   template_name='groups/create.html',
                   context={'form': form})
@@ -39,7 +39,6 @@ def get_render_update(request: HttpRequest, pk: int):
             form.save()
             return HttpResponseRedirect(reverse('groups:list'))
 
-    token = get_token(request)
     return render(request=request,
                   template_name='groups/update.html',
                   context={'form': form})

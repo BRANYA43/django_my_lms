@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}Details of selected Group{% endblock %}
 
 {% block content %}
     <p>Title: {{ group.title }}</p>
     <p>Start date: {{ group.start_date }}</p>
-    <p>Description: {{ group.description }}/p>
-    <br><br>
+    <p>Description: {{ group.description }}</p>
+    <br>
     <a href="{% url 'groups:update' group.pk %}"><b>Edit</b></a>
     <br><br>
     <a href="{% url 'groups:list'  %}"><b>Back to list</b></a>

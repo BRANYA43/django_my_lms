@@ -1,7 +1,11 @@
 from django.contrib import admin
 from django.urls import path, re_path, include
 
-from groups.views import get_render_list, get_render_create, get_render_update, get_render_detail, get_render_delete
+from groups.views import get_render_list
+from groups.views import get_render_create
+from groups.views import get_render_update
+from groups.views import get_render_detail
+from groups.views import get_render_delete
 
 app_name = 'groups'
 

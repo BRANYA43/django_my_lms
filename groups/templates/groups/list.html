@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}List of groups{% endblock %}
+{% block title %}List of Groups{% endblock %}
 
 {% block content %}
+    <a href="{% url 'groups:create' %}">Create new group</a>
+    <br><br>
     <table border="1">
         <thead>
             <tr>
@@ -18,7 +20,7 @@
                     <td><a href="{% url 'groups:detail' group.pk %}">{{ group.title }}</a></td>
                     <td>{{ group.start_date }}</td>
                     <td><a href="{% url 'groups:update' group.pk %}">Edit</a> </td>
-                    <td><a href="{% url 'groups:delete' group.pk %}">Delete</a> </td>
+                    <td><a href="{% url 'groups:delete' group.pk %}">Remove</a> </td>
                 </tr>
             {% endfor %}
         </tbody>
