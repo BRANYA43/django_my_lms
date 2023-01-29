@@ -4,7 +4,7 @@ from django.core.validators import MinLengthValidator
 from django.db import models
 from faker import Faker
 
-from .validators import validate_phone_number
+from core.validators import validate_phone_number
 
 VALID_DOMAINS = ('gmail.com', 'yahoo.com', 'test.com')
 

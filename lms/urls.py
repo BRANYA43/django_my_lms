@@ -1,21 +1,15 @@
 from django.contrib import admin
-from django.urls import path, re_path
+from django.urls import path, re_path, include
+from django.views.generic import RedirectView
 
-from groups.views import get_render_list_group, get_render_create_group, get_render_update_group, get_render_detail_group
-from students.views import get_students, create_student_view, update_student, detail_student
-from students.views import index
-from students.views import view_with_param
-from students.views import view_without_param
+from core.views import index
 from groups.views import get_render_list_group, get_render_create_group, get_render_update_group, get_render_detail_group
 from teachers.views import get_render_list_teacher, get_render_create_teacher, get_render_update_teacher, get_render_detail_teacher
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index),
-    path('students/', get_students),
-    path('students/create/', create_student_view),
-    path('students/update/<int:pk>/', update_student),
-    path('students/detail/<int:pk>/', detail_student),
+    path('', index, name='home'),
+    path('students/', include('students.urls')),
     path('groups/', get_render_list_group),
     path('groups/', get_render_list_group),
     path('groups/create/', get_render_create_group),
