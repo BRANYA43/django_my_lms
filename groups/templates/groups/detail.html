@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LMS - {{ title }}</title>
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
     <p>Title: {{ group.title }}</p>
     <p>Start date: {{ group.start_date }}</p>
     <p>Description: {{ group.description }}/p>
     <br><br>
-    <a href="/groups/update/{{ group.pk }}"><b>Edit</b></a>
+    <a href="{% url 'groups:update' group.pk %}"><b>Edit</b></a>
     <br><br>
-    <a href="/groups/"><b>Back to list</b></a>
-</body>
-</html>
+    <a href="{% url 'groups:list'  %}"><b>Back to list</b></a>
+{% endblock %}
