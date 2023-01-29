@@ -49,7 +49,7 @@ def create_student_view(request):
         form = CreateStudentForm(request.POST)
         if form .is_valid():
             form.save()
-            return HttpResponseRedirect('/students/')
+            return HttpResponseRedirect('students:list')
 
     return render(request=request,
                   template_name='students/create.html',
@@ -65,7 +65,7 @@ def update_student(request, pk):
         form = UpdateStudentForm(request.POST, instance=student)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(reverse('list'))
+            return HttpResponseRedirect(reverse('students:list'))
 
     return render(request=request,
                   template_name='students/update.html',
@@ -76,7 +76,7 @@ def delete_student(request, pk):
     student = Student.objects.get(pk=pk)
     if request.method == 'POST':
         student.delete()
-        return HttpResponseRedirect(reverse('list'))
+        return HttpResponseRedirect(reverse('students:list'))
     return render(request=request,
                   template_name='students/delete.html',
                   context={'student': student})
