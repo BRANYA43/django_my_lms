@@ -12,6 +12,9 @@ class CreateTeacherForm(forms.ModelForm):
                   'salary',
                   'email',
                   ]
+        widgets = {
+            'birthday': forms.DateInput(attrs={'type': 'date'})
+        }
 
 
 class UpdateTeacherForm(forms.ModelForm):
@@ -23,3 +26,6 @@ class UpdateTeacherForm(forms.ModelForm):
                   'salary',
                   'email',
                   ]
+        widgets = {
+            'birthday': forms.DateInput(attrs={'type': 'date'})
+        }

@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>LMS - {{ title }}</title>
-</head>
-<body>
-    <a href="/teachers/create/"><b>Create new teacher</b></a>
+{% extends 'base.html' %}
+
+{% block title %}List of teachers{% endblock %}
+
+{% block content %}
+    <a href="{% url 'teachers:create' %}">Create new Teacher</a>
     <br><br>
     <table border="1">
         <thead>
@@ -13,16 +11,18 @@
                 <th>First name</th>
                 <th>Last name</th>
                 <th>Update</th>
+                <th>Delete</th>
             </tr>
         <thead>
         <tbody>
             {% for teacher in teachers %}
                 <tr>
-                    <td><a href="/teachers/detail/{{ teacher.pk }}/">{{ teacher.first_name }}</a></td>
+                    <td><a href="{% url 'teachers:detail' teacher.pk %}">{{ teacher.first_name }}</a></td>
                     <td>{{ teacher.last_name }}</td>
-                    <td><a href="/teachers/update/{{ teacher.pk }}/">Edit</a></td>
+                    <td><a href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
+                    <td><a href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-</body>
+{% endblock %}
