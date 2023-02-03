@@ -1,5 +1,7 @@
+import datetime
 from datetime import date
 
+from dateutil.relativedelta import relativedelta
 from django.core.validators import MinLengthValidator
 from django.db import models
 from faker import Faker
@@ -37,3 +39,6 @@ class Student(models.Model):
             student.birthday = faker.date_between(start_date='-65y', end_date='-18y')
             student.phone = f'0{faker.random_int(min=100000000, max=9999999999)}'
             student.save()
+
+    def get_age(self):
+        return relativedelta(datetime.date.today(), self.birthday).years
