@@ -3,26 +3,32 @@
 {% block title %}List of Groups{% endblock %}
 
 {% block content %}
-    <a href="{% url 'groups:create' %}">Create new group</a>
-    <br><br>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Start date</th>
-                <th>Update</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for group in groups %}
-                <tr>
-                    <td><a href="{% url 'groups:detail' group.pk %}">{{ group.title }}</a></td>
-                    <td>{{ group.start_date }}</td>
-                    <td><a href="{% url 'groups:update' group.pk %}">Edit</a> </td>
-                    <td><a href="{% url 'groups:delete' group.pk %}">Remove</a> </td>
-                </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr class="text-center">
+                        <th></th>
+                        <th>Title</th>
+                        <th>Start date</th>
+                        <th><i class="bi bi-pencil-fill"></i></th>
+                        <th><i class="bi bi-person-x-fill"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><a href="{% url 'groups:detail' group.pk %}">{{ group.title }}</a></td>
+                            <td class="text-center">{{ group.start_date|date:"d M Y"}}</td>
+                            <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{% url 'groups:update' group.pk %}">Edit</a> </td>
+                            <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{% url 'groups:delete' group.pk %}">Remove</a> </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-3"></div>
+    </div>
 {% endblock %}
