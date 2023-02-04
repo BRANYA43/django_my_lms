@@ -1,4 +1,5 @@
 import datetime
+import random
 from datetime import date
 
 from dateutil.relativedelta import relativedelta
@@ -40,6 +41,7 @@ class Student(models.Model):
             student.last_name = faker.last_name()
             student.email = f'{student.last_name}@{faker.random.choice(VALID_DOMAINS)}'
             student.birthday = faker.date_between(start_date='-65y', end_date='-18y')
+            student.group = random.choice(Group.objects.all())
             student.phone = f'0{faker.random_int(min=100000000, max=9999999999)}'
             student.save()
 
