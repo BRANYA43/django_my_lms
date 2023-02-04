@@ -3,13 +3,20 @@
 {% block title %}Details of selected Teacher{% endblock %}
 
 {% block content %}
-    <p><b>First name:</b> {{ teacher.first_name }}</p>
-    <p><b>Last name:</b> {{ teacher.last_name }}</p>
-    <p><b>Birthday:</b> {{ teacher.birthday }}</p>
-    <p><b>Salary:</b> {{ teacher.salary }}</p>
-    <p><b>Email:</b> {{ teacher.email }}</p>
-    <br>
-    <a href="{% url 'teachers:update' teacher.pk %}"><b>Edit</b></a>
-    <br><br>
-    <a href="{% url 'teachers:list' %}"><b>Back to list</b></a>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col align-self-center">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">{{ teacher.first_name }} {{ teacher.last_name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ teacher.email }}</h6>
+                    <p class="card-text">Birthday: {{ teacher.birthday|date:"d M Y" }} ({{ teacher.get_age }} year(s))</p>
+                    <p class="card-text">Salary: {{ teacher.salary }}</p>
+                    <a class="btn btn-outline-primary" href="{% url 'teachers:update' teacher.pk %}">Edit</a>
+                    <a class="btn btn-outline-primary" href="{% url 'teachers:list' %}">Back to list</a>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
 {% endblock %}

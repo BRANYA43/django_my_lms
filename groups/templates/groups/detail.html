@@ -3,11 +3,19 @@
 {% block title %}Details of selected Group{% endblock %}
 
 {% block content %}
-    <p>Title: {{ group.title }}</p>
-    <p>Start date: {{ group.start_date }}</p>
-    <p>Description: {{ group.description }}</p>
-    <br>
-    <a href="{% url 'groups:update' group.pk %}"><b>Edit</b></a>
-    <br><br>
-    <a href="{% url 'groups:list'  %}"><b>Back to list</b></a>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col align-self-center">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Title: {{ group.title }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">Start date: {{ group.start_date|date:"d M Y" }}</h6>
+                    <p class="card-text">{{ group.description }}</p>
+                    <a class="btn btn-outline-primary" href="{% url 'groups:update' group.pk %}">Edit</a>
+                    <a class="btn btn-outline-primary" href="{% url 'groups:list' %}">Back to list</a>
+                </div>
+            </div>
+        </div>
+        <div class="col"></div>
+    </div>
 {% endblock %}
