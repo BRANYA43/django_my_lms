@@ -8,29 +8,19 @@ from django.views.decorators.csrf import csrf_exempt
 from webargs.fields import Str
 from webargs.djangoparser import use_args
 
-from .forms import CreateStudentForm, UpdateStudentForm
+from .forms import CreateStudentForm, UpdateStudentForm, StudentFilterForm
 from .models import Student
 
 
-@use_args(
-    {
-        'first_name': Str(required=False),
-        'last_name': Str(required=False),
-    },
-    location='query',
-)
-def get_students(request, args):
+def get_students(request):
     students = Student.objects.all().order_by('birthday')
 
-    if len(args) and (args.get('first_name') or args.get('last_name')):
-        students = students.filter(
-            Q(first_name=args.get('first_name', '')) | Q(last_name=args.get('last_name', ''))
-        )
+    filter_form = StudentFilterForm(data=request.GET, queryset=students)
 
     return render(
         request=request,
         template_name='students/list.html',
-        context={'title': 'List of Students', 'students': students}
+        context={'filter_form': filter_form}
     )
 
 
@@ -49,7 +39,7 @@ def create_student_view(request):
         form = CreateStudentForm(request.POST)
         if form .is_valid():
             form.save()
-            return HttpResponseRedirect('students:list')
+            return HttpResponseRedirect(reverse('students:list'))
 
     return render(request=request,
                   template_name='students/create.html',

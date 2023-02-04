@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_filters %}
+
 {% block title %}
 Update student "{{ form.first_name.value }}"
 {% endblock %}
@@ -7,10 +9,18 @@ Update student "{{ form.first_name.value }}"
 {% block content %}
     <form method="post">
         {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        <input type="submit" value="Update"><br><br>
-        <a href="{% url 'students:list' %}">Back to list</a>
-    </form>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="text-center">
+                    <input class="btn btn-outline-primary" type="submit" value="Update">
+                    <a class="btn btn-outline-primary" href="{% url 'students:list' %}">Back to list</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
 {% endblock %}
