@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_filters %}
+
 {% block title %}Delete selected Group{% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        <p>Do you really want to delete group <strong>{{ group.title }}</strong>?</p>
-        <input type="submit" value="Agree">
-        <br><br>
-        <a href="{% url 'groups:list' %}">Back to list</a>
-    </form>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-center">
+                    <p>Do you really want to delete group <strong>{{ group.title }}</strong>?</p>
+                    <input class="btn btn-outline-primary" type="submit" value="Agree">
+                    <a class="btn btn-outline-primary" href="{% url 'groups:list' %}">Back to list</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
 {% endblock %}

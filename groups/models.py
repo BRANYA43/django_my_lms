@@ -17,7 +17,7 @@ class Group(models.Model):
         faker = Faker()
         for _ in range(count):
             group = cls()
-            group.title = f'title group {_}'
+            group.title = faker.word().capitalize()
             group.start_date = faker.date_between(start_date='+0y', end_date='+5y')
             group.description = faker.text()
             group.save()

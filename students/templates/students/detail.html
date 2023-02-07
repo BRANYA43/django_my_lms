@@ -11,6 +11,7 @@
                     <h5 class="card-title">{{ student.first_name }} {{ student.last_name }}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">{{ student.email }}</h6>
                     <p class="card-text">{{ student.birthday|date:"d M Y" }} year(s)  ({{ student.get_age }})</p>
+                    <p class="card-text">Group: {{ student.group.title }}</p>
                     {% if student.city %}
                         <p class="card-text">{{ student.city }}</p>
                     {% endif %}
