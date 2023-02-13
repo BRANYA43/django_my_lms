@@ -13,6 +13,8 @@ class Group(models.Model):
     headman = models.OneToOneField('students.Student', on_delete=models.SET_NULL, null=True, blank=True,
                                    related_name='headman_group')
     teachers = models.ManyToManyField(to=Teacher, blank=True, related_name='groups')
+    course = models.OneToOneField('courses.Course', on_delete=models.SET_NULL, null=True, blank=True,
+                                  related_name='group')
     create = models.DateTimeField(auto_now_add=True)
     update = models.DateTimeField(auto_now=True)
 

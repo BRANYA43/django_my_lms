@@ -12,6 +12,9 @@ class Course(BaseModel):
     class Meta(BaseModel.Meta):
         db_table = 'courses'
 
+    def __str__(self):
+        return self.title
+
     @classmethod
     def generate_data(cls, cnt):
         faker = Faker()

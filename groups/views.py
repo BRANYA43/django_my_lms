@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 
+from courses.models import Course
 from students.models import Student
 from .forms import GroupCreateForm, GroupUpdateForm
 from .models import Group

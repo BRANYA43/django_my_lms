@@ -14,6 +14,15 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    @classmethod
+    def _generate(cls):
+        return cls()
+
+    @classmethod
+    def generate_data(cls, cnt):
+        for _ in range(cnt):
+            cls._generate().save()
+
 
 class PersonModel(BaseModel):
     domain = ('gmail.com', 'yahoo.com', 'test.com')
@@ -45,8 +54,3 @@ class PersonModel(BaseModel):
             city=faker.city(),
         )
         return obj
-
-    @classmethod
-    def generate_data(cls, cnt):
-        for _ in range(cnt):
-            cls._generate().save()
