@@ -1,13 +1,19 @@
-from django.forms import forms
+from django import forms
+
+from courses.models import Course
 
 
-class CourseBaseForm:
-    ...
+class CourseBaseForm(forms.ModelForm):
+    class Meta:
+        model = Course
+        fields = '__all__'
 
 
-class CourseCreateForm:
-    ...
+class CourseCreateForm(CourseBaseForm):
+    class Meta(CourseBaseForm.Meta):
+        pass
 
 
-class CourseUpdateForm:
-    ...
+class CourseUpdateForm(CourseBaseForm):
+    class Meta(CourseBaseForm.Meta):
+        pass
