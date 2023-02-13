@@ -31,7 +31,9 @@ class CourseUpdateView(UpdateView):
 
 
 class CourseDetailView(DetailView):
-    ...
+    model = Course
+    success_url = reverse_lazy('courses:list')
+    template_name = 'courses/detail.html'
 
 
 class CourseDeleteView(DeleteView):
