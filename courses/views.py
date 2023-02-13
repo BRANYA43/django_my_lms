@@ -37,4 +37,6 @@ class CourseDetailView(DetailView):
 
 
 class CourseDeleteView(DeleteView):
-    ...
+    model = Course
+    success_url = reverse_lazy('courses:list')
+    template_name = 'courses/delete.html'

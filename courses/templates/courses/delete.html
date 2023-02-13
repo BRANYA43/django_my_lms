@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_filters %}
+
+{% block title %}Delete selected Course{% endblock %}
+
+{% block content %}
+<!--    <div class="row">-->
+<!--        <div class="col-3"></div>-->
+<!--        <div class="col">-->
+<!--            <form method="post">-->
+<!--                {% csrf_token %}-->
+<!--                <div class="text-center">-->
+<!--                    <p>Do you really want to delete course <strong>{{ course.title }}</strong>?</p>-->
+<!--                    <input class="btn btn-outline-primary" type="submit" value="Agree">-->
+<!--                    <a class="btn btn-outline-primary" href="{% url 'courses:list' %}">Back to list</a>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--        <div class="col-3"></div>-->
+<!--    </div>-->
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col">
+            <form method="post">
+                {% csrf_token %}
+                <div class="text-center">
+                    <p>Do you really want to delete course <strong>{{ course.title }}</strong>?</p>
+
+                    <input class="btn btn-outline-primary" type="submit" value="Agree">
+                    <a class="btn btn-outline-primary" href="{% url 'courses:list' %}">Back to list</a>
+                </div>
+            </form>
+        </div>
+        <div class="col-3"></div>
+    </div>
+{% endblock %}
