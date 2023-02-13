@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 
-from courses.forms import CourseCreateForm
+from courses.forms import CourseCreateForm, CourseUpdateForm
 from courses.models import Course
 
 
@@ -24,7 +24,10 @@ class CourseCreateView(CreateView):
 
 
 class CourseUpdateView(UpdateView):
-    ...
+    model = Course
+    form_class = CourseUpdateForm
+    success_url = reverse_lazy('courses:list')
+    template_name = 'courses/update.html'
 
 
 class CourseDetailView(DetailView):
