@@ -1,29 +1,45 @@
 from django import forms
 
+from groups.models import Group
+from students.models import Student
 from .models import Group
 
 
-class CreateGroupForm(forms.ModelForm):
+class GroupBaseForm(forms.ModelForm):
+    students = forms.ModelMultipleChoiceField(queryset=None, required=False)
+
+    def save(self, commit=True):
+        new_group = super().save(commit)
+        students = self.cleaned_data['students']
+        for student in students:
+            student.group = new_group
+            student.save()
+
     class Meta:
         model = Group
-        fields = [
-            'title',
-            'start_date',
-            'description',
-        ]
+        fields = '__all__'
         widgets = {
-            'start_date': forms.DateInput(attrs={'type': 'date'})
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
 
-class UpdateGroupForm(forms.ModelForm):
-    class Meta:
-        model = Group
-        fields = [
-            'title',
-            'start_date',
-            'description',
+class GroupCreateForm(GroupBaseForm):
+    # students = forms.ModelMultipleChoiceField(queryset=Student.objects.filter(group__isnull=True))
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['students'].queryset = Student.objects.filter(group__isnull=True).select_related('group')
+
+    class Meta(GroupBaseForm.Meta):
+        pass
+
+
+class GroupUpdateForm(GroupBaseForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['students'].queryset = Student.objects.all().select_related('group')
+
+    class Meta(GroupBaseForm.Meta):
+        exclude = [
+            'start_date'
         ]
-        widgets = {
-            'start_date': forms.DateInput(attrs={'type': 'date'})
-        }

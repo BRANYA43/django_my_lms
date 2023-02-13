@@ -10,9 +10,7 @@
         <div class="col">
             <form method="post">
                 {% csrf_token %}
-                <table border="1">
-                    {{ form|crispy }}
-                </table>
+                {{ form|crispy }}
                 <div class="text-center">
                     <input class="btn btn-outline-primary" type="submit" value="Update">
                     <a class="btn btn-outline-primary" href="{% url 'groups:list' %}">Back to list</a>
@@ -21,5 +19,9 @@
         </div>
         <div class="col-3"></div>
     </div>
-
+    <div class="row">
+        {% with object_list=group.students.all is_group=True %}
+            {% include 'includes/students_table.html' %}
+        {% endwith %}
+    </div>
 {% endblock %}

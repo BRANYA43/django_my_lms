@@ -1,49 +1,24 @@
-import datetime
-import random
-from datetime import date
+from random import choice
 
-from dateutil.relativedelta import relativedelta
-from django.core.validators import MinLengthValidator
 from django.db import models
-from faker import Faker
 
-from core.validators import validate_phone_number
+from core.models import PersonModel
+
 from groups.models import Group
 
-VALID_DOMAINS = ('gmail.com', 'yahoo.com', 'test.com')
 
-
-class Student(models.Model):
-    first_name = models.CharField(max_length=50, verbose_name='First name', db_column='f_name',
-                                  validators=[MinLengthValidator(3, message='First name field value less then two symbols.')])
-    last_name = models.CharField(max_length=50, verbose_name='Last name', db_column='l_name',
-                                 validators=[MinLengthValidator(3)])
-    birthday = models.DateField(default=date.today)
-    city = models.CharField(max_length=25, null=True, blank=True)
-    email = models.EmailField(validators=[])
-    phone = models.CharField(max_length=20, validators=[validate_phone_number])
-    group = models.ForeignKey(Group,on_delete=models.SET_NULL, null=True, related_name='students')
-    created = models.DateTimeField(auto_now_add=True)
-    update = models.DateTimeField(auto_now=True)
+class Student(PersonModel):
+    group = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True, related_name='students')
 
     class Meta:
-        __tablename__ = 'students'
+        db_table = 'students'
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name} {self.birthday} {self.email}'
+        return f'{self.first_name} {self.last_name}'
 
     @classmethod
-    def generate_fake_data(cls, count: int):
-        faker = Faker()
-        for _ in range(count):
-            student = cls()
-            student.first_name = faker.first_name()
-            student.last_name = faker.last_name()
-            student.email = f'{student.last_name}@{faker.random.choice(VALID_DOMAINS)}'
-            student.birthday = faker.date_between(start_date='-65y', end_date='-18y')
-            student.group = random.choice(Group.objects.all())
-            student.phone = f'0{faker.random_int(min=100000000, max=9999999999)}'
-            student.save()
-
-    def get_age(self):
-        return relativedelta(datetime.date.today(), self.birthday).years
+    def _generate(cls):
+        groups = Group.objects.all()
+        student = super()._generate()
+        student.group = choice(groups)
+        return student

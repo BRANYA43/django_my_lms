@@ -1,10 +1,9 @@
-from django.shortcuts import render
-from django.http import HttpRequest
-from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpRequest, HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import CreateGroupForm
-from .forms import UpdateGroupForm
+from students.models import Student
+from .forms import GroupCreateForm, GroupUpdateForm
 from .models import Group
 
 
@@ -17,31 +16,31 @@ def get_render_list(request: HttpRequest):
 
 def get_render_create(request: HttpRequest):
     if request.method == 'GET':
-        form = CreateGroupForm()
+        form = GroupCreateForm()
+        return render(request=request,
+                      template_name='groups/create.html',
+                      context={'form': form})
+
     elif request.method == 'POST':
-        form = CreateGroupForm(request.POST)
+        form = GroupCreateForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('groups:list'))
-
-    return render(request=request,
-                  template_name='groups/create.html',
-                  context={'form': form})
 
 
 def get_render_update(request: HttpRequest, pk: int):
-    group = Group.objects.get(pk=pk)
+    group = get_object_or_404(Group, pk=pk)
+    students = {'students': Student.objects.filter(group=group)}
     if request.method == 'GET':
-        form = UpdateGroupForm(instance=group)
+        form = GroupUpdateForm(instance=group, initial=students)
+        return render(request=request,
+                      template_name='groups/update.html',
+                      context={'form': form, 'group': group})
     elif request.method == 'POST':
-        form = UpdateGroupForm(request.POST, instance=group)
+        form = GroupUpdateForm(data=request.POST, instance=group, initial=students)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect(reverse('groups:list'))
-
-    return render(request=request,
-                  template_name='groups/update.html',
-                  context={'form': form})
 
 
 def get_render_detail(request: HttpRequest, pk: int):

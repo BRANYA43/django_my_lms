@@ -1,5 +1,4 @@
-from django.contrib import admin
-from django.urls import path, re_path, include
+from django.urls import path
 
 from groups.views import get_render_list
 from groups.views import get_render_create
