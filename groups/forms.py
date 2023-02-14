@@ -1,6 +1,5 @@
 from django import forms
 
-from groups.models import Group
 from students.models import Student
 from .models import Group
 
@@ -37,7 +36,7 @@ class GroupCreateForm(GroupBaseForm):
 class GroupUpdateForm(GroupBaseForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['students'].queryset = Student.objects.all().select_related('group')
+        self.fields['students'].queryset = Student.objects.filter(group__isnull=True).select_related('group')
 
     class Meta(GroupBaseForm.Meta):
         exclude = [
