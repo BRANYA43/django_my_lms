@@ -1,17 +1,15 @@
 from django.urls import path
 
-from groups.views import get_render_list
-from groups.views import get_render_create
-from groups.views import get_render_update
+from groups.views import GroupListView, GroupCreateView, GroupUpdateView
 from groups.views import get_render_detail
 from groups.views import get_render_delete
 
 app_name = 'groups'
 
 urlpatterns = [
-    path('', get_render_list, name='list'),
-    path('create/', get_render_create, name='create'),
-    path('update/<int:pk>/', get_render_update, name='update'),
+    path('', GroupListView.as_view(), name='list'),
+    path('create/', GroupCreateView.as_view(), name='create'),
+    path('update/<int:pk>/', GroupUpdateView.as_view(), name='update'),
     path('detail/<int:pk>/', get_render_detail, name='detail'),
     path('delete/<int:pk>/', get_render_delete, name='delete'),
     ]

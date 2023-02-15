@@ -1,23 +1,21 @@
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, ListView
 
 from core.views import CustomUpdateBaseView
 from .forms import CreateStudentForm, UpdateStudentForm, StudentFilterForm
 from .models import Student
 
 
-def get_students(request):
-    students = Student.objects.all().order_by('birthday')
+class StudentListView(ListView):
+    model = Student
+    template_name = 'students/list.html'
 
-    filter_form = StudentFilterForm(data=request.GET, queryset=students)
-
-    return render(
-        request=request,
-        template_name='students/list.html',
-        context={'filter_form': filter_form}
-    )
+    def get_queryset(self):
+        students = Student.objects.all().order_by('first_name').select_related('group')
+        filter_from = StudentFilterForm(data=self.request.GET, queryset=students)
+        return filter_from
 
 
 def detail_student(request, pk):
@@ -74,7 +72,7 @@ class CustomUpdateStudentView(CustomUpdateBaseView):
     template_name = 'students/update.html'
 
 
-class UpdateStudentView(UpdateView):
+class StudentUpdateView(UpdateView):
     model = Student
     form_class = UpdateStudentForm
     success_url = reverse_lazy('students:list')
