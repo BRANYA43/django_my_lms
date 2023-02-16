@@ -49,4 +49,5 @@ class GroupUpdateForm(GroupBaseForm):
     class Meta(GroupBaseForm.Meta):
         exclude = [
             'start_date',
+            'headman'
         ]
