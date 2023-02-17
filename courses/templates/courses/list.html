@@ -17,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for course in courses %}
+                    {% for course in object_list %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
                             <td><a href="{% url 'courses:detail' course.pk %}">{{ course.title }}</a></td>
