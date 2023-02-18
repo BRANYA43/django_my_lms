@@ -1,3 +1,5 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse, reverse_lazy
@@ -18,13 +20,7 @@ class StudentListView(ListView):
         return filter_from
 
 
-def detail_student(request, pk):
-    student = Student.objects.get(pk=pk)
-    return render(request=request,
-                  template_name='students/detail.html',
-                  context={'student': student})
-
-
+@login_required
 def create_student_view(request):
     if request.method == 'GET':
         form = CreateStudentForm()
@@ -39,22 +35,22 @@ def create_student_view(request):
                   context={'form': form})
 
 
-def update_student(request, pk):
-    student = get_object_or_404(Student, pk=pk)
+class StudentUpdateView(LoginRequiredMixin, UpdateView):
+    model = Student
+    form_class = UpdateStudentForm
+    success_url = reverse_lazy('students:list')
+    template_name = 'students/update.html'
 
-    if request.method == 'GET':
-        form = UpdateStudentForm(instance=student)
-    elif request.method == 'POST':
-        form = UpdateStudentForm(request.POST, instance=student)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('students:list'))
 
+@login_required
+def detail_student(request, pk):
+    student = Student.objects.get(pk=pk)
     return render(request=request,
-                  template_name='students/update.html',
-                  context={'form': form})
+                  template_name='students/detail.html',
+                  context={'student': student})
 
 
+@login_required
 def delete_student(request, pk):
     student = Student.objects.get(pk=pk)
     if request.method == 'POST':
@@ -63,17 +59,3 @@ def delete_student(request, pk):
     return render(request=request,
                   template_name='students/delete.html',
                   context={'student': student})
-
-
-class CustomUpdateStudentView(CustomUpdateBaseView):
-    model = Student
-    form_class = UpdateStudentForm
-    success_url = 'students:list'
-    template_name = 'students/update.html'
-
-
-class StudentUpdateView(UpdateView):
-    model = Student
-    form_class = UpdateStudentForm
-    success_url = reverse_lazy('students:list')
-    template_name = 'students/update.html'

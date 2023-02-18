@@ -13,6 +13,7 @@ urlpatterns = [
     path('teachers/', include('teachers.urls')),
     path('courses/', include('courses.urls')),
     path('accounts/', include('accounts.urls')),
+    path('accounts/', include('django.contrib.auth.urls'))
 
     # path('test/route/param/', view_without_param),          # test/route/param/
     # path(r'test/route/<str:value>/', view_with_param),       # test/route/df;lkjhrlkjgf's/

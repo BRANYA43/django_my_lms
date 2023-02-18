@@ -15,7 +15,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'students:list' %}">List</a></li>
-            <li><a class="dropdown-item" href="{% url 'students:create' %}">Create</a></li>
+            {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'students:create' %}">Create</a></li>
+            {% endif %}
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -33,7 +35,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'groups:list' %}">List</a></li>
-            <li><a class="dropdown-item" href="{% url 'groups:create' %}">Create</a></li>
+            {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'groups:create' %}">Create</a></li>
+            {% endif %}
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -50,12 +54,24 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Account
+              {% if user.is_authenticated %}
+                {{ user.username }}
+              {% else %}
+                No name
+              {% endif %}
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="{% url 'accounts:register' %}">Sign Up</a></li>
-              <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Sign In</a></li>
-              <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Sign Out</a></li>
+              {% if user.is_authenticated %}
+                <li><a class="dropdown-item" href="{% url 'accounts:profile_update' %}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'password_change' %}">Password Change</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Sign Out</a></li>
+              {% else %}
+                <li><a class="dropdown-item" href="{% url 'accounts:register' %}">Sign Up</a></li>
+                <li><a class="dropdown-item" href="{% url 'accounts:login' %}">Sign In</a></li>
+                <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'password_reset' %}">Password Reset</a></li>
+              {% endif %}
             </ul>
           </li>
         </ul>
