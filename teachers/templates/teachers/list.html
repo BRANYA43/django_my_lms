@@ -13,19 +13,27 @@
                         <th>First name</th>
                         <th>Last name</th>
                         <th>Birthday</th>
-                        <th><i class="bi bi-pencil-fill"></i></th>
-                        <th><i class="bi bi-person-x-fill"></i></th>
+                        {% if user.is_authenticated %}
+                            <th><i class="bi bi-pencil-fill"></i></th>
+                            <th><i class="bi bi-person-x-fill"></i></th>
+                        {% endif %}
                     </tr>
                 <thead>
                 <tbody>
                     {% for teacher in object_list %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a href="{% url 'teachers:detail' teacher.pk %}">{{ teacher.first_name }}</a></td>
+                            {% if user.is_authenticated %}
+                                <td><a href="{% url 'teachers:detail' teacher.pk %}">{{ teacher.first_name }}</a></td>
+                            {% else %}
+                                <td>{{ teacher.first_name }}</td>
+                            {% endif %}
                             <td>{{ teacher.last_name }}</td>
                             <td class="text-center">{{ teacher.birthday|date:"d M Y" }}</td>
-                            <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
-                            <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
+                            {% if user.is_authenticated %}
+                                <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{% url 'teachers:update' teacher.pk %}">Edit</a></td>
+                                <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{% url 'teachers:delete' teacher.pk %}">Delete</a></td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -26,7 +26,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'teachers:list' %}">List</a></li>
-            <li><a class="dropdown-item" href="{% url 'teachers:create' %}">Create</a></li>
+            {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'teachers:create' %}">Create</a></li>
+            {% endif %}
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -46,7 +48,9 @@
           </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="{% url 'courses:list' %}">List</a></li>
-            <li><a class="dropdown-item" href="{% url 'courses:create' %}">Create</a></li>
+            {% if user.is_authenticated %}
+              <li><a class="dropdown-item" href="{% url 'courses:create' %}">Create</a></li>
+            {% endif %}
           </ul>
         </li>
       </ul>
