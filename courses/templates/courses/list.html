@@ -12,18 +12,26 @@
                         <th></th>
                         <th>Title</th>
                         <th>Lessons</th>
-                        <th><i class="bi bi-pencil-fill"></i></th>
-                        <th><i class="bi bi-person-x-fill"></i></th>
+                        {% if user.is_authenticated %}
+                            <th><i class="bi bi-pencil-fill"></i></th>
+                            <th><i class="bi bi-person-x-fill"></i></th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     {% for course in object_list %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a href="{% url 'courses:detail' course.pk %}">{{ course.title }}</a></td>
+                            {% if user.is_authenticated %}
+                                <td><a href="{% url 'courses:detail' course.pk %}">{{ course.title }}</a></td>
+                            {% else %}
+                                <td>{{ course.title }}</td>
+                            {% endif %}
                             <td class="text-center">{{ course.lesson_count }}</td>
-                            <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{% url 'courses:update' course.pk %}">Edit</a> </td>
-                            <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{% url 'courses:delete' course.pk %}">Remove</a> </td>
+                            {% if user.is_authenticated %}
+                                <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{% url 'courses:update' course.pk %}">Edit</a> </td>
+                                <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{% url 'courses:delete' course.pk %}">Remove</a> </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>

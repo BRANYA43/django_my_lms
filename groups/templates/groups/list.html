@@ -15,21 +15,29 @@
                         <th>Start date</th>
                         <th>End date</th>
                         <th>Headman</th>
-                        <th><i class="bi bi-pencil-fill"></i></th>
-                        <th><i class="bi bi-person-x-fill"></i></th>
+                        {% if user.is_authenticated %}
+                            <th><i class="bi bi-pencil-fill"></i></th>
+                            <th><i class="bi bi-person-x-fill"></i></th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
                     {% for group in object_list %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><a href="{% url 'groups:detail' group.pk %}">{{ group.title }}</a></td>
+                            {% if user.is_authenticated %}
+                                <td><a href="{% url 'groups:detail' group.pk %}">{{ group.title }}</a></td>
+                            {% else %}
+                                <td>{{ group.title }}</td>
+                            {% endif %}
                             <td class="text-center">{% if group.course %}{{ group.course }}{% endif %}</td>
                             <td class="text-center">{{ group.start_date|date:"d M Y" }}</td>
                             <td class="text-center">{{ group.end_date|date:"d M Y" }}</td>
                             <td class="text-center">{% if group.headman %}{{ group.headman.first_name }}{{ group.headman.last_name }}{% endif %}</td>
-                            <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{% url 'groups:update' group.pk %}">Edit</a> </td>
-                            <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{% url 'groups:delete' group.pk %}">Remove</a> </td>
+                            {% if user.is_authenticated %}
+                                <td class="text-center"><a class="btn btn-outline-primary btn-sm" href="{% url 'groups:update' group.pk %}">Edit</a> </td>
+                                <td class="text-center"><a class="btn btn-outline-danger btn-sm" href="{% url 'groups:delete' group.pk %}">Remove</a> </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>
