@@ -49,7 +49,7 @@ class PersonModel(BaseModel):
             first_name=first_name,
             last_name=last_name,
             birthday=faker.date_between(start_date='-65y', end_date='-18y'),
-            email=f'{first_name} {last_name}@{faker.random.choice(cls.domain)}',
+            email=f'{first_name}.{last_name}@{faker.random.choice(cls.domain)}',
             phone=f'0{faker.random_int(min=100_000_000, max=999_999_999)}',
             city=faker.city(),
         )

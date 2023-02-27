@@ -14,7 +14,12 @@ class Student(PersonModel):
         db_table = 'students'
 
     def __str__(self):
-        return f'{self.first_name} {self.last_name}'
+        ret = f'{self.first_name} {self.last_name}'
+        if self.group:
+            ret += f' ({self.group.title})'
+        else:
+            ret += ' ()'
+        return ret
 
     @classmethod
     def _generate(cls):

@@ -30,3 +30,6 @@ class Group(models.Model):
             group.start_date = faker.date_between(start_date='+0y', end_date='+5y')
             group.description = faker.text()
             group.save()
+
+    def __str__(self):
+        return f'Group: {self.title}'
