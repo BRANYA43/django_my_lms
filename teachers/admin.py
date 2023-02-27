@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-from groups.admin import TeacherInlineTable
 from .models import Teacher
 
 
@@ -24,5 +23,3 @@ class TeacherAdmin(admin.ModelAdmin):
     readonly_fields = (
         'get_age',
     )
-
-    inlines = (TeacherInlineTable,)
