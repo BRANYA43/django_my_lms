@@ -4,14 +4,21 @@ from django.contrib import admin
 from groups.models import Group
 
 
+class TeacherInlineTable(admin.TabularInline):
+    model = Group.teachers.through
+
+    def __init__(self, parent_model, admin_site):
+        super().__init__(parent_model, admin_site)
+
 class StudentsInlineTable(admin.TabularInline):
     from students.models import Student
     model = Student
     fields = ('first_name', 'last_name', 'email', 'phone')
     extra = 0
     readonly_fields = ('first_name', 'last_name', 'email', 'phone')
+
     # show_change_link = True
-    
+
     def has_add_permission(self, request, obj):
         return False
 
@@ -52,4 +59,4 @@ class GroupAdmin(admin.ModelAdmin):
         'create',
         'update',
     )
-    inlines = [StudentsInlineTable, ]
+    inlines = [StudentsInlineTable, TeacherInlineTable]
