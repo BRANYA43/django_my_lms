@@ -3,6 +3,34 @@ from django.contrib import admin
 from .models import Teacher
 
 
+class GroupInlineTable(admin.TabularInline):
+    verbose_name_plural = 'groups'
+    model = Teacher.groups.through
+    extra = 0
+    fields = (
+        'get_title',
+    )
+    readonly_fields = (
+        "get_title",
+    )
+
+    def has_add_permission(self, request, obj):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    @staticmethod
+    def get_group_attr(instance, name: str):
+        if instance:
+            return instance.group.__getattribute__(name)
+
+    def get_title(self, instance):
+        return self.get_group_attr(instance, 'title')
+
+    get_title.short_description = 'title'
+
+
 @admin.register(Teacher)
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ('first_name', 'last_name')
@@ -23,3 +51,4 @@ class TeacherAdmin(admin.ModelAdmin):
     readonly_fields = (
         'get_age',
     )
+    inlines = [GroupInlineTable, ]
