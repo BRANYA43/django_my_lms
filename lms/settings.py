@@ -65,6 +65,8 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+
+    'core.middleware.DurationRequestProcessMiddleware'
 ]
 
 ROOT_URLCONF = 'lms.urls'

@@ -31,7 +31,7 @@
         </div>
     </div>
     <div class="row">
-        {% with object_list=object_list.qs is_group=False %}
+        {% with object_list=object_list is_group=False %}
             {% include 'includes/students_table.html' %}
         {% endwith %}
     </div>
